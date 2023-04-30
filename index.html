@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Sogndalselvi Hydrology</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/SubWatersheds_1.js"></script>
+        <script src="data/Study_Area_2.js"></script>
+        <script src="data/RiverStreams_11.js"></script>
+        <script src="data/SogndalselviWatershed_12.js"></script>
+        <script src="data/Pourpoints_13.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_OSMStandard_0');
+        map.getPane('pane_OSMStandard_0').style.zIndex = 400;
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_0',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_SubWatersheds_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Discharge (cu.m per s)</th>\
+                        <td>' + (feature.properties['Discharge'] !== null ? autolinker.link(feature.properties['Discharge'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Area (in sq.km.)</th>\
+                        <td>' + (feature.properties['Area'] !== null ? autolinker.link(feature.properties['Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Sub-Watershed</th>\
+                        <td>' + (feature.properties['SWatershed'] !== null ? autolinker.link(feature.properties['SWatershed'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SubWatersheds_1_0(feature) {
+            switch(String(feature.properties['Discharge'])) {
+                case '1.79':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '4.13':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,230,230,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '5.71':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,204,204,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '10.85':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,179,179,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '12.38':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,153,153,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '15.13':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,128,128,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '26.68':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,102,102,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '26.95':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,77,77,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '32.78':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,51,51,1.0)',
+                interactive: true,
+            }
+                    break;
+                case '36.91':
+                    return {
+                pane: 'pane_SubWatersheds_1',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,25,25,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_SubWatersheds_1');
+        map.getPane('pane_SubWatersheds_1').style.zIndex = 401;
+        map.getPane('pane_SubWatersheds_1').style['mix-blend-mode'] = 'normal';
+        var layer_SubWatersheds_1 = new L.geoJson(json_SubWatersheds_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SubWatersheds_1',
+            layerName: 'layer_SubWatersheds_1',
+            pane: 'pane_SubWatersheds_1',
+            onEachFeature: pop_SubWatersheds_1,
+            style: style_SubWatersheds_1_0,
+        });
+        bounds_group.addLayer(layer_SubWatersheds_1);
+        map.addLayer(layer_SubWatersheds_1);
+        function pop_Study_Area_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Object</th>\
+                        <td>' + (feature.properties['Object'] !== null ? autolinker.link(feature.properties['Object'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Study_Area_2_0() {
+            return {
+                pane: 'pane_Study_Area_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,178,151,0.0)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Study_Area_2');
+        map.getPane('pane_Study_Area_2').style.zIndex = 402;
+        map.getPane('pane_Study_Area_2').style['mix-blend-mode'] = 'normal';
+        var layer_Study_Area_2 = new L.geoJson(json_Study_Area_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Study_Area_2',
+            layerName: 'layer_Study_Area_2',
+            pane: 'pane_Study_Area_2',
+            onEachFeature: pop_Study_Area_2,
+            style: style_Study_Area_2_0,
+        });
+        bounds_group.addLayer(layer_Study_Area_2);
+        map.addLayer(layer_Study_Area_2);
+        map.createPane('pane_KernelDensity_3');
+        map.getPane('pane_KernelDensity_3').style.zIndex = 403;
+        var img_KernelDensity_3 = 'data/KernelDensity_3.png';
+        var img_bounds_KernelDensity_3 = [[61.212056314211154,6.78985703755864],[61.414576368462846,7.104928163011096]];
+        var layer_KernelDensity_3 = new L.imageOverlay(img_KernelDensity_3,
+                                              img_bounds_KernelDensity_3,
+                                              {pane: 'pane_KernelDensity_3'});
+        bounds_group.addLayer(layer_KernelDensity_3);
+        map.createPane('pane_LineDensity_4');
+        map.getPane('pane_LineDensity_4').style.zIndex = 404;
+        var img_LineDensity_4 = 'data/LineDensity_4.png';
+        var img_bounds_LineDensity_4 = [[61.212056314211154,6.78985703755864],[61.414576368462846,7.104928163011096]];
+        var layer_LineDensity_4 = new L.imageOverlay(img_LineDensity_4,
+                                              img_bounds_LineDensity_4,
+                                              {pane: 'pane_LineDensity_4'});
+        bounds_group.addLayer(layer_LineDensity_4);
+        map.createPane('pane_Elevation_5');
+        map.getPane('pane_Elevation_5').style.zIndex = 405;
+        var img_Elevation_5 = 'data/Elevation_5.png';
+        var img_bounds_Elevation_5 = [[61.20109284045691,6.76716644224721],[61.424368719952994,7.107769921275029]];
+        var layer_Elevation_5 = new L.imageOverlay(img_Elevation_5,
+                                              img_bounds_Elevation_5,
+                                              {pane: 'pane_Elevation_5'});
+        bounds_group.addLayer(layer_Elevation_5);
+        map.createPane('pane_Slope_6');
+        map.getPane('pane_Slope_6').style.zIndex = 406;
+        var img_Slope_6 = 'data/Slope_6.png';
+        var img_bounds_Slope_6 = [[61.20109284045691,6.76716644224721],[61.424368719952994,7.107769921275029]];
+        var layer_Slope_6 = new L.imageOverlay(img_Slope_6,
+                                              img_bounds_Slope_6,
+                                              {pane: 'pane_Slope_6'});
+        bounds_group.addLayer(layer_Slope_6);
+        map.createPane('pane_Aspect_7');
+        map.getPane('pane_Aspect_7').style.zIndex = 407;
+        var img_Aspect_7 = 'data/Aspect_7.png';
+        var img_bounds_Aspect_7 = [[61.20109284045691,6.76716644224721],[61.424368719952994,7.107769921275029]];
+        var layer_Aspect_7 = new L.imageOverlay(img_Aspect_7,
+                                              img_bounds_Aspect_7,
+                                              {pane: 'pane_Aspect_7'});
+        bounds_group.addLayer(layer_Aspect_7);
+        map.createPane('pane_FlowAccumulation_8');
+        map.getPane('pane_FlowAccumulation_8').style.zIndex = 408;
+        var img_FlowAccumulation_8 = 'data/FlowAccumulation_8.png';
+        var img_bounds_FlowAccumulation_8 = [[61.20109284045691,6.76716644224721],[61.424368719952994,7.107769921275029]];
+        var layer_FlowAccumulation_8 = new L.imageOverlay(img_FlowAccumulation_8,
+                                              img_bounds_FlowAccumulation_8,
+                                              {pane: 'pane_FlowAccumulation_8'});
+        bounds_group.addLayer(layer_FlowAccumulation_8);
+        map.createPane('pane_FlowDirection_9');
+        map.getPane('pane_FlowDirection_9').style.zIndex = 409;
+        var img_FlowDirection_9 = 'data/FlowDirection_9.png';
+        var img_bounds_FlowDirection_9 = [[61.20109284045691,6.76716644224721],[61.424368719952994,7.107769921275029]];
+        var layer_FlowDirection_9 = new L.imageOverlay(img_FlowDirection_9,
+                                              img_bounds_FlowDirection_9,
+                                              {pane: 'pane_FlowDirection_9'});
+        bounds_group.addLayer(layer_FlowDirection_9);
+        map.createPane('pane_Hillshade_10');
+        map.getPane('pane_Hillshade_10').style.zIndex = 410;
+        var img_Hillshade_10 = 'data/Hillshade_10.png';
+        var img_bounds_Hillshade_10 = [[61.20109284045691,6.76716644224721],[61.424368719952994,7.107769921275029]];
+        var layer_Hillshade_10 = new L.imageOverlay(img_Hillshade_10,
+                                              img_bounds_Hillshade_10,
+                                              {pane: 'pane_Hillshade_10'});
+        bounds_group.addLayer(layer_Hillshade_10);
+        function pop_RiverStreams_11(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Stream Order</th>\
+                        <td>' + (feature.properties['GRID_CODE'] !== null ? autolinker.link(feature.properties['GRID_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_RiverStreams_11_0(feature) {
+            switch(String(feature.properties['GRID_CODE'])) {
+                case '1':
+                    return {
+                pane: 'pane_RiverStreams_11',
+                opacity: 1,
+                color: 'rgba(5,1,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '2':
+                    return {
+                pane: 'pane_RiverStreams_11',
+                opacity: 1,
+                color: 'rgba(255,107,1,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '3':
+                    return {
+                pane: 'pane_RiverStreams_11',
+                opacity: 1,
+                color: 'rgba(30,254,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 3.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '4':
+                    return {
+                pane: 'pane_RiverStreams_11',
+                opacity: 1,
+                color: 'rgba(1,81,255,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_RiverStreams_11');
+        map.getPane('pane_RiverStreams_11').style.zIndex = 411;
+        map.getPane('pane_RiverStreams_11').style['mix-blend-mode'] = 'normal';
+        var layer_RiverStreams_11 = new L.geoJson(json_RiverStreams_11, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_RiverStreams_11',
+            layerName: 'layer_RiverStreams_11',
+            pane: 'pane_RiverStreams_11',
+            onEachFeature: pop_RiverStreams_11,
+            style: style_RiverStreams_11_0,
+        });
+        bounds_group.addLayer(layer_RiverStreams_11);
+        map.addLayer(layer_RiverStreams_11);
+        function pop_SogndalselviWatershed_12(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Object'] !== null ? autolinker.link(feature.properties['Object'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SogndalselviWatershed_12_0() {
+            return {
+                pane: 'pane_SogndalselviWatershed_12',
+                opacity: 1,
+                color: 'rgba(215,25,28,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,155,111,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_SogndalselviWatershed_12');
+        map.getPane('pane_SogndalselviWatershed_12').style.zIndex = 412;
+        map.getPane('pane_SogndalselviWatershed_12').style['mix-blend-mode'] = 'normal';
+        var layer_SogndalselviWatershed_12 = new L.geoJson(json_SogndalselviWatershed_12, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SogndalselviWatershed_12',
+            layerName: 'layer_SogndalselviWatershed_12',
+            pane: 'pane_SogndalselviWatershed_12',
+            onEachFeature: pop_SogndalselviWatershed_12,
+            style: style_SogndalselviWatershed_12_0,
+        });
+        bounds_group.addLayer(layer_SogndalselviWatershed_12);
+        map.addLayer(layer_SogndalselviWatershed_12);
+        function pop_Pourpoints_13(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Object</th>\
+                        <td>' + (feature.properties['Object'] !== null ? autolinker.link(feature.properties['Object'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Pourpoints_13_0() {
+            return {
+                pane: 'pane_Pourpoints_13',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,247,1,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Pourpoints_13');
+        map.getPane('pane_Pourpoints_13').style.zIndex = 413;
+        map.getPane('pane_Pourpoints_13').style['mix-blend-mode'] = 'normal';
+        var layer_Pourpoints_13 = new L.geoJson(json_Pourpoints_13, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Pourpoints_13',
+            layerName: 'layer_Pourpoints_13',
+            pane: 'pane_Pourpoints_13',
+            onEachFeature: pop_Pourpoints_13,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Pourpoints_13_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Pourpoints_13);
+        map.addLayer(layer_Pourpoints_13);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>Sogndalselvi Hydrology</h2>';
+            };
+            title.addTo(map);
+            var abstract = new L.Control({'position':'bottomleft'});
+            abstract.onAdd = function (map) {
+                this._div = L.DomUtil.create('div',
+                'leaflet-control abstract');
+                this._div.id = 'abstract'
+                    this._div.setAttribute("onmouseenter", "abstract.show()");
+                    this._div.setAttribute("onmouseleave", "abstract.hide()");
+                    this.hide();
+                    return this._div;
+                };
+                abstract.hide = function () {
+                    this._div.classList.remove("abstractUncollapsed");
+                    this._div.classList.add("abstract");
+                    this._div.innerHTML = 'i'
+                }
+                abstract.show = function () {
+                    this._div.classList.remove("abstract");
+                    this._div.classList.add("abstractUncollapsed");
+                    this._div.innerHTML = 'Climate change has severely threatened global water resources, and has resulted in shifting precipitation patterns. The consequences of these changes will gravely impact communities and ecosystems, causing great socio-economic and environmental damages. While Norway’s vulnerability to climate change is low compared to other countries, the country will suffer from adverse effects of climate change unless preventive and mitigative measures are taken. Under the RCP8.5 scenario adopted by the Intergovernmental Panel for Climate Change, Norway will experience an annual precipitation increase of ca.18%. In order to assist in climate adaptive measures to be taken in Norway, a hydrological analysis of the Sogndalselvi Watershed was conducted in this study. ArcGIS and Nevina were used to determine the characteristics of the watershed and sub-watersheds. The Rational Method was used to calculate the 200-year flood discharge of each sub-watershed. This study provides an overview of the characteristics, discharge and sensitivity to land use change of ten major sub-watersheds of Sogndalselvi.';
+            };
+            abstract.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Pourpoints_13.png" /> Pourpoints': layer_Pourpoints_13,'<img src="legend/SogndalselviWatershed_12.png" /> SogndalselviWatershed': layer_SogndalselviWatershed_12,'RiverStreams<br /><table><tr><td style="text-align: center;"><img src="legend/RiverStreams_11_10.png" /></td><td>1</td></tr><tr><td style="text-align: center;"><img src="legend/RiverStreams_11_21.png" /></td><td>2</td></tr><tr><td style="text-align: center;"><img src="legend/RiverStreams_11_32.png" /></td><td>3</td></tr><tr><td style="text-align: center;"><img src="legend/RiverStreams_11_43.png" /></td><td>4</td></tr></table>': layer_RiverStreams_11,"Hillshade": layer_Hillshade_10,"FlowDirection": layer_FlowDirection_9,"FlowAccumulation": layer_FlowAccumulation_8,"Aspect": layer_Aspect_7,"Slope": layer_Slope_6,"Elevation": layer_Elevation_5,"LineDensity": layer_LineDensity_4,"KernelDensity": layer_KernelDensity_3,'<img src="legend/Study_Area_2.png" /> Study_Area': layer_Study_Area_2,'Sub-Watersheds<br /><table><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_1790.png" /></td><td>1.79</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_4131.png" /></td><td>4.13</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_5712.png" /></td><td>5.71</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_10853.png" /></td><td>10.85</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_12384.png" /></td><td>12.38</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_15135.png" /></td><td>15.13</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_26686.png" /></td><td>26.68</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_26957.png" /></td><td>26.95</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_32788.png" /></td><td>32.78</td></tr><tr><td style="text-align: center;"><img src="legend/SubWatersheds_1_36919.png" /></td><td>36.91</td></tr></table>': layer_SubWatersheds_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"GRID_CODE": "int","Discharge": "real","Area": "real","SWatershed": "str","Object": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_GRID_CODE = document.createElement("div");
+            div_GRID_CODE.id = "div_GRID_CODE";
+            div_GRID_CODE.className = "slider";
+            document.getElementById("menu").appendChild(div_GRID_CODE);
+            var lab_GRID_CODE = document.createElement('div');
+            lab_GRID_CODE.innerHTML  = 'GRID_CODE: <span id="val_GRID_CODE"></span>';
+            lab_GRID_CODE.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_GRID_CODE);
+            var reset_GRID_CODE = document.createElement('div');
+            reset_GRID_CODE.innerHTML = 'clear filter';
+            reset_GRID_CODE.className = 'filterlabel';
+            lab_GRID_CODE.className = 'filterlabel';
+            reset_GRID_CODE.onclick = function() {
+                sel_GRID_CODE.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_GRID_CODE);
+            var sel_GRID_CODE = document.getElementById('div_GRID_CODE');
+            noUiSlider.create(sel_GRID_CODE, {
+                connect: true,
+                start: [1, 4],
+                step: 1,
+                format: wNumb({
+                    decimals: 0,
+                    }),
+                range: {
+                min: 1,
+                max: 4
+                }
+            });
+            sel_GRID_CODE.noUiSlider.on('update', function (values) {
+            filterVals =[];
+            for (value in values){
+            filterVals.push(parseInt(value))
+            }
+            val_GRID_CODE = document.getElementById('val_GRID_CODE');
+            val_GRID_CODE.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Discharge = document.createElement("div");
+            div_Discharge.id = "div_Discharge";
+            div_Discharge.className = "slider";
+            document.getElementById("menu").appendChild(div_Discharge);
+            var lab_Discharge = document.createElement('div');
+            lab_Discharge.innerHTML  = 'Discharge: <span id="val_Discharge"></span>';
+            lab_Discharge.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_Discharge);
+            var reset_Discharge = document.createElement('div');
+            reset_Discharge.innerHTML = 'clear filter';
+            reset_Discharge.className = 'filterlabel';
+            lab_Discharge.className = 'filterlabel';
+            reset_Discharge.onclick = function() {
+                sel_Discharge.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_Discharge);
+            var sel_Discharge = document.getElementById('div_Discharge');
+            noUiSlider.create(sel_Discharge, {
+                connect: true,
+                start: [1.79, 36.91],
+                range: {
+                min: 1.79,
+                max: 36.91
+                }
+            });
+            sel_Discharge.noUiSlider.on('update', function (values) {
+            val_Discharge = document.getElementById('val_Discharge');
+            val_Discharge.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Area = document.createElement("div");
+            div_Area.id = "div_Area";
+            div_Area.className = "slider";
+            document.getElementById("menu").appendChild(div_Area);
+            var lab_Area = document.createElement('div');
+            lab_Area.innerHTML  = 'Area: <span id="val_Area"></span>';
+            lab_Area.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_Area);
+            var reset_Area = document.createElement('div');
+            reset_Area.innerHTML = 'clear filter';
+            reset_Area.className = 'filterlabel';
+            lab_Area.className = 'filterlabel';
+            reset_Area.onclick = function() {
+                sel_Area.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_Area);
+            var sel_Area = document.getElementById('div_Area');
+            noUiSlider.create(sel_Area, {
+                connect: true,
+                start: [1.57, 23.14],
+                range: {
+                min: 1.57,
+                max: 23.14
+                }
+            });
+            sel_Area.noUiSlider.on('update', function (values) {
+            val_Area = document.getElementById('val_Area');
+            val_Area.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_SWatershed = document.createElement('div');
+            div_SWatershed.id = "div_SWatershed";
+            div_SWatershed.className= "filterselect";
+            document.getElementById("menu").appendChild(div_SWatershed);
+            sel_SWatershed = document.createElement('select');
+            sel_SWatershed.multiple = true;
+            sel_SWatershed.size = 10;
+            sel_SWatershed.id = "sel_SWatershed";
+            var SWatershed_options_str = "<option value='' unselected></option>";
+            sel_SWatershed.onchange = function(){filterFunc()};
+            SWatershed_options_str  += '<option value="Sub-Watershed1">Sub-Watershed1</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed10">Sub-Watershed10</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed2">Sub-Watershed2</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed3">Sub-Watershed3</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed4">Sub-Watershed4</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed5">Sub-Watershed5</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed6">Sub-Watershed6</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed7">Sub-Watershed7</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed8">Sub-Watershed8</option>';
+            SWatershed_options_str  += '<option value="Sub-Watershed9">Sub-Watershed9</option>';
+            sel_SWatershed.innerHTML = SWatershed_options_str;
+            div_SWatershed.appendChild(sel_SWatershed);
+            var lab_SWatershed = document.createElement('div');
+            lab_SWatershed.innerHTML = 'SWatershed';
+            lab_SWatershed.className = 'filterlabel';
+            div_SWatershed.appendChild(lab_SWatershed);
+            var reset_SWatershed = document.createElement('div');
+            reset_SWatershed.innerHTML = 'clear filter';
+            reset_SWatershed.className = 'filterlabel';
+            reset_SWatershed.onclick = function() {
+                var options = document.getElementById("sel_SWatershed").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_SWatershed.appendChild(reset_SWatershed);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Object = document.createElement('div');
+            div_Object.id = "div_Object";
+            div_Object.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Object);
+            sel_Object = document.createElement('select');
+            sel_Object.multiple = true;
+            sel_Object.size = 10;
+            sel_Object.id = "sel_Object";
+            var Object_options_str = "<option value='' unselected></option>";
+            sel_Object.onchange = function(){filterFunc()};
+            Object_options_str  += '<option value="Pourpoint1">Pourpoint1</option>';
+            Object_options_str  += '<option value="Pourpoint10">Pourpoint10</option>';
+            Object_options_str  += '<option value="Pourpoint2">Pourpoint2</option>';
+            Object_options_str  += '<option value="Pourpoint3">Pourpoint3</option>';
+            Object_options_str  += '<option value="Pourpoint4">Pourpoint4</option>';
+            Object_options_str  += '<option value="Pourpoint5">Pourpoint5</option>';
+            Object_options_str  += '<option value="Pourpoint6">Pourpoint6</option>';
+            Object_options_str  += '<option value="Pourpoint7">Pourpoint7</option>';
+            Object_options_str  += '<option value="Pourpoint8">Pourpoint8</option>';
+            Object_options_str  += '<option value="Pourpoint9">Pourpoint9</option>';
+            Object_options_str  += '<option value="Sogndalselvi Watershed">Sogndalselvi Watershed</option>';
+            Object_options_str  += '<option value="Study Area">Study Area</option>';
+            sel_Object.innerHTML = Object_options_str;
+            div_Object.appendChild(sel_Object);
+            var lab_Object = document.createElement('div');
+            lab_Object.innerHTML = 'Object';
+            lab_Object.className = 'filterlabel';
+            div_Object.appendChild(lab_Object);
+            var reset_Object = document.createElement('div');
+            reset_Object.innerHTML = 'clear filter';
+            reset_Object.className = 'filterlabel';
+            reset_Object.onclick = function() {
+                var options = document.getElementById("sel_Object").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Object.appendChild(reset_Object);
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        resetLabels([layer_SubWatersheds_1]);
+        map.on("zoomend", function(){
+            resetLabels([layer_SubWatersheds_1]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_SubWatersheds_1]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_SubWatersheds_1]);
+        });
+        </script>
+    </body>
+</html>
